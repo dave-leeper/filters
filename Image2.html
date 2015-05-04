@@ -1,0 +1,834 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>New Web Project</title>
+		<script type="text/javascript" src="./filters.js"></script> 
+		<script type="text/javascript">
+            var filters;
+            
+            function testAssignChannelValueRGBA(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasAssignChannellValueRGBA"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultAssignChannelValueFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasAssignChannellValueRGBAProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'AssignChannelValue', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'channels': 'rgba', 
+                    'value': 127, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testAssignChannelValueAlpha(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasAssignChannellValueAlpha"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultAssignChannelValueFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasAssignChannellValueAlphaProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'AssignChannelValue', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'channels': 'a', 
+                    'value': 127, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testAssignChannelValueBlue(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasAssignChannellValueBlue"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultAssignChannelValueFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasAssignChannellValueBlueProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'AssignChannelValue', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'channels': 'b', 
+                    'value': 0, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testAssignChannelValueGreen(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasAssignChannellValueGreen"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultAssignChannelValueFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasAssignChannellValueGreenProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'AssignChannelValue', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'channels': 'g', 
+                    'value': 0, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testAssignChannelValueRed(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasAssignChannellValueRed"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultAssignChannelValueFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasAssignChannellValueRedProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'AssignChannelValue', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'channels': 'r', 
+                    'value': 0, 
+                    'imageString': inView.imageToString()
+                });
+            }
+           
+            function testMean(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasMean"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasMeanProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'mean', 
+                    'factor': new Masks().meanFactor, 
+                    'bias': new Masks().meanBias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testEmboss2(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasEmboss2"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasEmboss2Progress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'emboss2', 
+                    'factor': new Masks().emboss2Factor, 
+                    'bias': new Masks().emboss2Bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testEmboss1(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasEmboss1"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasEmboss1Progress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'emboss1', 
+                    'factor': new Masks().emboss1Factor, 
+                    'bias': new Masks().emboss1Bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testFilters(inView) {
+                document.getElementById("CanvasOriginalProgress").innerHTML = "100%";
+                testEmboss1(inView);
+                testEmboss2(inView);
+                testMean(inView);
+                
+            }
+            
+            function testEdges(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasEdges"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasEdgesProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'edges', 
+                    'factor': new Masks().edgesFactor, 
+                    'bias': new Masks().edgesBias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testSharpen2(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasSharpen2"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasSharpen2Progress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'sharpen2', 
+                    'factor': new Masks().sharpen2Factor, 
+                    'bias': new Masks().sharpen2Bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testSharpen1(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasSharpen1"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasSharpen1Progress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'sharpen1', 
+                    'factor': new Masks().sharpen1Factor, 
+                    'bias': new Masks().sharpen1Bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testFindAllEdges(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasFindAllEdges"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasFindAllEdgesProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'findAllEdges', 
+                    'factor': new Masks().findAllEdgesFactor, 
+                    'bias': new Masks().findAllEdgesBias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testFind45DegreeEdges(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasFind45DegreeEdges"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasFind45DegreeEdgesProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'find45DegreeEdges', 
+                    'factor': new Masks().find45DegreeEdgesFactor, 
+                    'bias': new Masks().find45DegreeEdgesBias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testFindVerticalEdges(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasFindVerticalEdges"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasFindVerticalEdgesProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'findVerticalEdges', 
+                    'factor': new Masks().findVerticalEdgesFactor, 
+                    'bias': new Masks().findVerticalEdgesBias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testFindHorizontalEdges(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasFindHorizontalEdges"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasFindHorizontalEdgesProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'findHorizontalEdges', 
+                    'factor': new Masks().findHorizontalEdgesFactor, 
+                    'bias': new Masks().findHorizontalEdgesBias,
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testBlur2(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBlur2"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBlur2Progress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'blur2', 
+                    'factor': new Masks().blur2Factor, 
+                    'bias': new Masks().blur2Bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testBlur1(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBlur1"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBlur1Progress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'blur1', 
+                    'factor': new Masks().blur1Factor, 
+                    'bias': new Masks().blur2Bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testFilters(inView) {
+                document.getElementById("CanvasOriginalProgress").innerHTML = "100%";
+                testBlur1(inView);
+                testBlur2(inView);
+                testFindHorizontalEdges(inView);
+                testFindVerticalEdges(inView);
+                testFind45DegreeEdges(inView);
+                testFindAllEdges(inView);
+                testSharpen1(inView);
+                testSharpen2(inView);
+                testEdges(inView);
+                testEmboss1(inView);
+                testEmboss2(inView);
+                testMean(inView);
+                testAssignChannelValueRed(inView);
+                testAssignChannelValueGreen(inView);
+                testAssignChannelValueBlue(inView);
+                testAssignChannelValueAlpha(inView);
+                testAssignChannelValueRGBA(inView);
+            }
+            
+			function initDraw() {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasOriginal"));
+
+				oCanvasView.drawImage("pic.png", testFilters);
+			} // initDraw			
+		</script>
+		
+    </head>
+    <body onLoad="initDraw();">
+        <canvas id="CanvasOriginal" width=201; height=300; style="position: absolute; left: 0px; top: 0px;"></canvas>
+        <canvas id="CanvasBlur1" width=201; height=300; style="position: absolute; left: 210px; top: 0px;"></canvas>
+        <canvas id="CanvasBlur2" width=201; height=300; style="position: absolute; left: 420px; top: 0px;"></canvas>
+        <canvas id="CanvasFindHorizontalEdges" width=201; height=300; style="position: absolute; left: 630px; top: 0px;"></canvas>
+        <canvas id="CanvasFindVerticalEdges" width=201; height=300; style="position: absolute; left: 840px; top: 0px;"></canvas>
+        <canvas id="CanvasFind45DegreeEdges" width=201; height=300; style="position: absolute; left: 1050px; top: 0px;"></canvas>
+        <canvas id="CanvasFindAllEdges" width=201; height=300; style="position: absolute; left: 0px; top: 310px;"></canvas>
+        <canvas id="CanvasSharpen1" width=201; height=300; style="position: absolute; left: 210px; top: 310px;"></canvas>
+        <canvas id="CanvasSharpen2" width=201; height=300; style="position: absolute; left: 420px; top: 310px;"></canvas>
+        <canvas id="CanvasEdges" width=201; height=300; style="position: absolute; left: 630px; top: 310px;"></canvas>
+        <canvas id="CanvasEmboss1" width=201; height=300; style="position: absolute; left: 840px; top: 310px;"></canvas>
+        <canvas id="CanvasEmboss2" width=201; height=300; style="position: absolute; left: 1050px; top: 310px;"></canvas>
+        <canvas id="CanvasMean" width=201; height=300; style="position: absolute; left: 0px; top: 620px;"></canvas>
+        <canvas id="CanvasAssignChannellValueRed" width=201; height=300; style="position: absolute; left: 210px; top: 620px;"></canvas>
+        <canvas id="CanvasAssignChannellValueGreen" width=201; height=300; style="position: absolute; left: 420px; top: 620px;"></canvas>
+        <canvas id="CanvasAssignChannellValueBlue" width=201; height=300; style="position: absolute; left: 630px; top: 620px;"></canvas>
+        <canvas id="CanvasAssignChannellValueAlpha" width=201; height=300; style="position: absolute; left: 840px; top: 620px;"></canvas>
+        <canvas id="CanvasAssignChannellValueRGBA" width=201; height=300; style="position: absolute; left: 1050px; top: 620px;"></canvas>
+        <table style="top: 20px; left: 1260px; position: absolute;">
+            <tr><td>1 Original</td><td id="CanvasOriginalProgress">0%</td></tr>
+            <tr><td>2 Blur 1</td><td id="CanvasBlur1Progress">0%</td></tr>
+            <tr><td>3 Blur 2</td><td id="CanvasBlur2Progress">0%</td></tr>
+            <tr><td>4 Find Horizontal Edges</td><td id="CanvasFindHorizontalEdgesProgress">0%</td></tr>
+            <tr><td>5 Find Vertical Edges</td><td id="CanvasFindVerticalEdgesProgress">0%</td></tr>
+            <tr><td>6 Find 45 Degree Edges</td><td id="CanvasFind45DegreeEdgesProgress">0%</td></tr>
+        </table>
+        <table style="top: 330px; left: 1260px; position: absolute;">
+            <tr><td>7 Find All Edges</td><td id="CanvasFindAllEdgesProgress">0%</td></tr>
+            <tr><td>8 Sharpen1</td><td id="CanvasSharpen1Progress">0%</td></tr>
+            <tr><td>9 Sharpen2</td><td id="CanvasSharpen2Progress">0%</td></tr>
+            <tr><td>10 Edges</td><td id="CanvasEdgesProgress">0%</td></tr>
+            <tr><td>11 Emboss1</td><td id="CanvasEmboss1Progress">0%</td></tr>
+            <tr><td>12 Emboss2</td><td id="CanvasEmboss2Progress">0%</td></tr>
+        </table>
+        <table style="top: 660px; left: 1260px; position: absolute;">
+            <tr><td>13 Mean</td><td id="CanvasMeanProgress">0%</td></tr>
+            <tr><td>14 AssignChannelValue: Red</td><td id="CanvasAssignChannellValueRedProgress">0%</td></tr>
+            <tr><td>15 AssignChannelValue: Green</td><td id="CanvasAssignChannellValueGreenProgress">0%</td></tr>
+            <tr><td>16 AssignChannelValue: Blue</td><td id="CanvasAssignChannellValueBlueProgress">0%</td></tr>
+            <tr><td>17 AssignChannelValue: Alpha</td><td id="CanvasAssignChannellValueAlphaProgress">0%</td></tr>
+            <tr><td>18 AssignChannelValue: RGBA</td><td id="CanvasAssignChannellValueRGBAProgress">0%</td></tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>New Web Project</title>
+		<script type="text/javascript" src="./filters.js"></script> 
+		<script type="text/javascript">
+            var View1;
+            var View2;
+            
+            function getText() {
+                document.getElementById("getTextButton").disabled=true;
+
+                var imageString = View1.imageToString();
+                
+                document.getElementById("showText").value=imageString;
+                document.getElementById("putTextButton").disabled=false;
+            }
+            
+            function putText() {
+                var imageData = document.getElementById("showText").value;
+               
+                document.getElementById("putTextButton").disabled=true;
+                View2.imageFromString(imageData);
+            }
+            
+			function initDraw() {
+				var iViewWidth = 201;
+				var iViewHeight = 300;
+				var oBody = document.getElementsByTagName("body");
+				var oBackgroundColor = new Color(200, 200, 200, 1);
+				
+                View1 = new CanvasView(document.getElementById("CanvasOriginal"));
+                View2 = new CanvasView(document.getElementById("CanvasCopy"));
+				View1.drawImage("pic.png", function(){document.getElementById("getTextButton").disabled=false;});
+			} // initDraw			
+		</script>
+		
+    </head>
+    <body onLoad="initDraw();">
+        <canvas id="CanvasOriginal" width=201; height=300; style="position: absolute; left: 0px; top: 0px;"></canvas>
+        <canvas id="CanvasCopy" width=201; height=300; style="position: absolute; left: 210px; top: 0px;"></canvas>
+        <div style="position: absolute; top: 310px; left: 0px;">
+            <input type="button" id="getTextButton" disabled onclick="getText();" value="Get Text">
+            <input type="button" id="putTextButton" disabled onclick="putText();" value="Put Text">
+            <br/>
+            <textarea id="showText" rows="200" cols="200"></textarea>
+        </div>
+        <table style="top: 20px; left: 640px; position: absolute;">
+            <tr><td>1 Original</td></tr>
+            <tr><td>2 Copy From Text In Canvas</td></tr>
+            <tr><td>3 Copy From Text In Table</td></tr>
+        </table>
+    </body>
+</html>

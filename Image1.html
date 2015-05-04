@@ -1,0 +1,856 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>New Web Project</title>
+		<script type="text/javascript" src="./filters.js"></script> 
+		<script type="text/javascript">
+            
+            function testSumHistogram(inView) {
+                var oFilters = new Filters();
+                var oHistogramResult = oFilters.histogram(inView);
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultSumHistogramFilter':
+                        {
+                            var oHistogramResult = new HistogramResult();
+                            
+                            oHistogramResult.fromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'SumHistogram', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'histogram': oHistogramResult.toString(),
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testHistogram(inView) {
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultHistogramFilter':
+                        {
+                            var oHistogramResult = new HistogramResult();
+                            
+                            oHistogramResult.fromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            break; // switch
+                        } // case
+                       default:
+                        {
+                            self.postMessage('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Histogram', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testMotionBlur(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasMotionBlur"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultMaskFilterFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasMotionBlurProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'MaskFilter', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'mask': 'motionBlur', 
+                    'factor': new Masks().motionBlurFactor, 
+                    'bias': new Masks().bias, 
+                    'imageString': inView.imageToString()
+                });
+            }
+
+            function testBlendAdditiveMultiplied(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBlendMultiplied"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultBlendFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBlendMultipliedProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Blend', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageBlendString': oBlendCanvasView.imageToString(),
+                    'blendMode': 'MULTIPLIED', 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testBlendAdditiveAlpha(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBlendAdditiveAlpha"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultBlendFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBlendAdditiveAlphaProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Blend', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageBlendString': oBlendCanvasView.imageToString(),
+                    'blendMode': 'ADDITIVE_ALPHA', 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testBlendAdditive(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBlendAdditive"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultBlendFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBlendAdditiveProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Blend', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageBlendString': oBlendCanvasView.imageToString(),
+                    'blendMode': 'ADDITIVE', 
+                    'imageString': inView.imageToString()
+                });
+            }
+                        
+            function testBlendCross(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBlendCross"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultBlendFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBlendCrossProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Blend', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageBlendString': oBlendCanvasView.imageToString(),
+                    'blendMode': 'CROSS', 
+                    'imageString': inView.imageToString()
+                });
+            }
+
+            function testBilinearInterpolate(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasBilinearInterpolate"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultBilinearInterpolateFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasBilinearInterpolateProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'BilinearInterpolate', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testErosion(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasErosion"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultErosionFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasErosionProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Erosion', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'erosionColor': new Color(100, 100, 100, 0.0).toStringWithAlpha(), 
+                    'threshold': 2, 
+                    'tolerance': 50, 
+                    'neighborColor': new Color(127, 127, 127, 1.0).toStringWithAlpha(), 
+                    'replacementColor': new Color(0, 0, 0, 0.0).toStringWithAlpha(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testScale2(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasScaleSmall"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultScaleFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasScaleSmallProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Scale', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'scaleX': 0.75, 
+                    'scaleY': 0.75, 
+                    'fillColor': new Color(200, 200, 200, 1.0).toStringWithAlpha(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testScale1(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasScaleLarge"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultScaleFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasScaleLargeProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Scale', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'scaleX': 1.75, 
+                    'scaleY': 1.75, 
+                    'fillColor': new Color(200, 200, 200, 1.0).toStringWithAlpha(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testRotate(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasRotate"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultRotateFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasRotateProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Rotate', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'rotationPointX': 50, 
+                    'rotationPointY': 50, 
+                    'angle': 50, 
+                    'fillColor': new Color(200, 200, 200, 1.0).toStringWithAlpha(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testTranslate(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasTranslate"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultTranslateFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasTranslateProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Translate', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'xOffset': 50, 
+                    'yOffset': 50, 
+                    'fillColor': new Color(200, 200, 200, 1.0).toStringWithAlpha(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testInvert(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasInvert"));
+                var worker = new Worker('filters.js');
+
+                document.getElementById("CanvasOriginalProgress").innerHTML = "100%";
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultInvertFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            document.getElementById("CanvasInvertProgress").innerHTML = data.msg + "%";
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Invert', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+             
+            function testDetectEdges(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasDetectEdges"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultDetectEdgesFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            document.getElementById("CanvasDetectEdgesProgress").innerHTML = data.msg + "%";
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'DetectEdges', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testGrayscale(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasGrayscale"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultGrayscaleFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            document.getElementById("CanvasGrayscaleProgress").innerHTML = data.msg + "%";
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            self.postMessage('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Grayscale', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testThreshold(inView) {
+                var oThresholdColor = new Color(127, 127, 127, 1.0);
+                var oNewHighColor = new Color(255, 255, 255, 1.0);
+                var oNewLowColor = new Color(0, 0, 0, 1.0);
+				var oCanvasView = new CanvasView(document.getElementById("CanvasThreshold"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultThresholdFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            document.getElementById("CanvasThresholdProgress").innerHTML = data.msg + "%";
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Threshold', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'thresholdColor': new Color(127, 127, 127, 1.0).toStringWithAlpha(), 
+                    'newHighColor': new Color(255, 255, 255, 1.0).toStringWithAlpha(), 
+                    'newLowColor': new Color(0, 0, 0, 1.0).toStringWithAlpha(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testEqualize(inView) {
+				var oCanvasView = new CanvasView(document.getElementById("CanvasEqualize"));
+                var worker = new Worker('filters.js');
+
+                worker.addEventListener('message', function(e) {
+                    var data = e.data;
+                    
+                    switch (data.cmd) {
+                        case 'ResultEqualizeFilter':
+                        {
+                            oCanvasView.imageFromString(data.msg);
+                            break; // switch
+                        } // case
+                        case 'Progress':
+                        {
+                            if (data.msg) {
+                                document.getElementById("CanvasEqualizeProgress").innerHTML = data.msg + "%";
+                            }
+                            break; // switch
+                        } // case
+                        case 'Log':
+                        {
+                            console.log(data.msg);
+                            break; // switch
+                        } // case
+                        default:
+                        {
+                            alert('Unknown command: ' + data.msg);
+                        } // default
+                    }; // switch
+                }, false);
+
+                worker.postMessage({
+                    'type': 'Filter', 
+                    'cmd': 'Equalize', 
+                    'width': inView.getWidth(), 
+                    'height': inView.getHeight(), 
+                    'imageString': inView.imageToString()
+                });
+            }
+            
+            function testFilters(inView) {
+                document.getElementById("CanvasOriginalProgress").innerHTML = "100%";
+                testEqualize(inView);
+                testThreshold(inView);
+                testGrayscale(inView);
+                testHistogram(inView);
+                testSumHistogram(inView);
+                testDetectEdges(inView);
+                testInvert(inView);
+                testTranslate(inView);
+                testRotate(inView);
+                testScale1(inView);
+                testScale2(inView);
+                testErosion(inView);
+                testBilinearInterpolate(inView);
+                testBlendCross(inView);
+                testBlendAdditive(inView);
+                testBlendAdditiveAlpha(inView);
+                testBlendAdditiveMultiplied(inView);
+                testMotionBlur(inView);
+            }
+            
+			function loadSourceImage() {
+                document.getElementById("CanvasCanvasBlendPicProgress").innerHTML = "100%";
+				var oCanvasView = new CanvasView(document.getElementById("CanvasOriginal"));
+
+				oCanvasView.drawImage("pic.png", testFilters);
+			} // loadSourceImage			
+            
+			function initDraw() {
+				oBlendCanvasView = new CanvasView(document.getElementById("CanvasBlendPic"));
+
+				oBlendCanvasView.drawImage("pic2.png", loadSourceImage);
+			} // initDraw			
+		</script>
+		
+    </head>
+    <body onLoad="initDraw();">
+        <canvas id="CanvasOriginal" width=201; height=300; style="position: absolute; left: 0px; top: 0px;"></canvas>
+        <canvas id="CanvasEqualize" width=201; height=300; style="position: absolute; left: 210px; top: 0px;"></canvas>
+        <canvas id="CanvasThreshold" width=201; height=300; style="position: absolute; left: 420px; top: 0px;"></canvas>
+        <canvas id="CanvasGrayscale" width=201; height=300; style="position: absolute; left: 630px; top: 0px;"></canvas>
+        <canvas id="CanvasDetectEdges" width=201; height=300; style="position: absolute; left: 840px; top: 0px;"></canvas>
+        <canvas id="CanvasInvert" width=201; height=300; style="position: absolute; left: 1050px; top: 0px;"></canvas>
+        <canvas id="CanvasTranslate" width=201; height=300; style="position: absolute; left: 0px; top: 310px;"></canvas>
+        <canvas id="CanvasRotate" width=201; height=300; style="position: absolute; left: 210px; top: 310px;"></canvas>
+        <canvas id="CanvasScaleLarge" width=201; height=300; style="position: absolute; left: 420px; top: 310px;"></canvas>
+        <canvas id="CanvasScaleSmall" width=201; height=300; style="position: absolute; left: 630px; top: 310px;"></canvas>
+        <canvas id="CanvasErosion" width=201; height=300; style="position: absolute; left: 840px; top: 310px;"></canvas>
+        <canvas id="CanvasBilinearInterpolate" width=201; height=300; style="position: absolute; left: 1050px; top: 310px;"></canvas>
+        <canvas id="CanvasBlendPic" width=201; height=300; style="position: absolute; left: 0px; top: 620px;"></canvas>
+        <canvas id="CanvasBlendCross" width=201; height=300; style="position: absolute; left: 210px; top: 620px;"></canvas>
+        <canvas id="CanvasBlendAdditive" width=201; height=300; style="position: absolute; left: 420px; top: 620px;"></canvas>
+        <canvas id="CanvasBlendAdditiveAlpha" width=201; height=300; style="position: absolute; left: 630px; top: 620px;"></canvas>
+        <canvas id="CanvasBlendMultiplied" width=201; height=300; style="position: absolute; left: 840px; top: 620px;"></canvas>
+        <canvas id="CanvasMotionBlur" width=201; height=300; style="position: absolute; left: 1050px; top: 620px;"></canvas>
+        <table style="top: 20px; left: 1260px; position: absolute;">
+            <tr><td>1 Original</td><td id="CanvasOriginalProgress">0%</td></tr>
+            <tr><td>2 Equalize</td><td id="CanvasEqualizeProgress">0%</td></tr>
+            <tr><td>3 Threshold</td><td id="CanvasThresholdProgress">0%</td></tr>
+            <tr><td>4 Grayscale</td><td id="CanvasGrayscaleProgress">0%</td></tr>
+            <tr><td>5 Detect Edges</td><td id="CanvasDetectEdgesProgress">0%</td></tr>
+            <tr><td>6 Invert</td><td id="CanvasInvertProgress">0%</td></tr>
+        </table>
+        <table style="top: 330px; left: 1260px; position: absolute;">
+            <tr><td>7 Translate</td><td id="CanvasTranslateProgress">0%</td></tr>
+            <tr><td>8 Rotate</td><td id="CanvasRotateProgress">0%</td></tr>
+            <tr><td>9 Scale Large</td><td id="CanvasScaleLargeProgress">0%</td></tr>
+            <tr><td>10 Scale Small</td><td id="CanvasScaleSmallProgress">0%</td></tr>
+            <tr><td>11 Erosion</td><td id="CanvasErosionProgress">0%</td></tr>
+            <tr><td>12 Bilinear Interpolate</td><td id="CanvasBilinearInterpolateProgress">0%</td></tr>
+        </table>
+        <table style="top: 660px; left: 1260px; position: absolute;">
+            <tr><td>13 Blend Picture</td><td id="CanvasCanvasBlendPicProgress">0%</td></tr>
+            <tr><td>14 Blend: CROSS</td><td id="CanvasBlendCrossProgress">0%</td></tr>
+            <tr><td>15 Blend: ADDITIVE</td><td id="CanvasBlendAdditiveProgress">0%</td></tr>
+            <tr><td>16 Blend: ADDITIVE_ALPHA</td><td id="CanvasBlendAdditiveAlphaProgress">0%</td></tr>
+            <tr><td>17 Blend: MULTIPLIED</td><td id="CanvasBlendMultipliedProgress">0%</td></tr>
+            <tr><td>18 Motion Blur</td><td id="CanvasMotionBlurProgress">0%</td></tr>
+        </table>
+    </body>
+</html>
